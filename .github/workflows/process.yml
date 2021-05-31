@@ -1,0 +1,23 @@
+name: Process latest data
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  reacttopush:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out this repo
+      uses: actions/checkout@v2
+    - name: process data
+      run: |-
+        gawk -f vacc_v.awk -F\; data/vacsi_v_fra.csv > data/vaccin_data.csv
+    - name: Commit and push if it changed
+      run: |-
+        git config user.name "Automated"
+        git config user.email "actions@users.noreply.github.com"
+        git add -A
+        timestamp=$(date -u)
+        git commit -m "Process data: ${timestamp}" || exit 0
+        git push
