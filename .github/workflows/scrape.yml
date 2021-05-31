@@ -1,0 +1,29 @@
+name: Scrape latest data
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron:  '* 19 * * *'
+
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out this repo
+      uses: actions/checkout@v2
+    - name: Fetch latest data
+      run: |-
+        mkdir -p data
+        UA='Mozilla/5.0 (X11; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0'
+        DATASETS='https://www.data.gouv.fr/fr/datasets/r'
+        VACSI_V_FRA='b273cf3b-e9de-437c-af55-eda5979e92fc'
+        curl -fsS -A "$UA" -L "${DATASETS}/${VACSI_V_FRA}" > data/vacsi_v_fra.csv
+    - name: Commit and push if it changed
+      run: |-
+        git config user.name "Automated"
+        git config user.email "actions@users.noreply.github.com"
+        git add -A
+        timestamp=$(date -u)
+        git commit -m "Latest data: ${timestamp}" || exit 0
+        git push
