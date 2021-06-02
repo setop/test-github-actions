@@ -25,11 +25,11 @@ jobs:
         GITHUB_TOKEN: ${{secrets.GH_ACTIONS_TOKEN}}
       run: |-
         pwd
-        #git config user.name "setop"
-        #git config user.email "setop@users.noreply.github.com"
+        git config user.name "setop"
+        git config user.email "7794056+setop@users.noreply.github.com"
         git add -A
         timestamp=$(date -u)
         git commit -m "Latest data: ${timestamp}" || exit 0
-        remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_ACTOR}/${GITHUB_REPOSITORY}.git"
+        #remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_ACTOR}/${GITHUB_REPOSITORY}.git"
         git push "${remote_repo}"
 
