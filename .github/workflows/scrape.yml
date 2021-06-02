@@ -11,6 +11,8 @@ jobs:
     steps:
     - name: Check out this repo
       uses: actions/checkout@v2
+      with:
+        persist-credentials: false
     - name: Fetch latest data
       run: |-
         pwd
@@ -30,6 +32,6 @@ jobs:
         git add -A
         timestamp=$(date -u)
         git commit -m "Latest data: ${timestamp}" || exit 0
-        #remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_ACTOR}/${GITHUB_REPOSITORY}.git"
+        remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_ACTOR}/${GITHUB_REPOSITORY}.git"
         git push "${remote_repo}"
 
