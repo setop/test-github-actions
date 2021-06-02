@@ -15,6 +15,7 @@ jobs:
       run: |-
         pwd
         mkdir -p data
+        date > date.txt
         UA='Mozilla/5.0 (X11; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0'
         DATASETS='https://www.data.gouv.fr/fr/datasets/r'
         VACSI_V_FRA='b273cf3b-e9de-437c-af55-eda5979e92fc'
