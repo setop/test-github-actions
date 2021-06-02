@@ -13,16 +13,22 @@ jobs:
       uses: actions/checkout@v2
     - name: Fetch latest data
       run: |-
+        pwd
         mkdir -p data
         UA='Mozilla/5.0 (X11; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0'
         DATASETS='https://www.data.gouv.fr/fr/datasets/r'
         VACSI_V_FRA='b273cf3b-e9de-437c-af55-eda5979e92fc'
         curl -fsS -A "$UA" -L "${DATASETS}/${VACSI_V_FRA}" > data/vacsi_v_fra.csv
     - name: Commit and push if it changed
+      env:
+        GITHUB_TOKEN: ${{secrets.GH_ACTIONS_TOKEN}}
       run: |-
+        pwd
         git config user.name "Automated"
         git config user.email "actions@users.noreply.github.com"
         git add -A
         timestamp=$(date -u)
         git commit -m "Latest data: ${timestamp}" || exit 0
-        git push
+        remote_repo="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        git push "${remote_repo}"
+
